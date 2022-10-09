@@ -3,10 +3,15 @@ CREATE DATABASE Cadastro
 USE Cadastro
 
 CREATE TABLE Usuarios(
-	Id INT PRIMARY KEY,
-	Nome VARCHAR(50),
-	Sobrenome VARCHAR(50),
-	Escolaridade INT,
-	Email VARCHAR(100),
-	DataNascimento DATETIME
+	Id INT IDENTITY(1,1) NOT NULL,
+	Nome VARCHAR(50) NOT NULL,
+	Sobrenome VARCHAR(50) NOT NULL,
+	Escolaridade INT NOT NULL,
+	Email VARCHAR(100) NOT NULL,
+	DataNascimento DATETIME NOT NULL
 )
+
+  INSERT INTO [Cadastro].[dbo].[Usuarios]
+  VALUES('NOME5','SOBRENOM5',3,'E@A.S',GETDATE()),
+		('NOME4','SOBRENOME4',3,'E@A.S',GETDATE()),
+		('NOME3','SOBRENOME3',3,'E@A.S',GETDATE())

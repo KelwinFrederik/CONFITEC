@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_WEB.Context;
 using API_WEB.Modelo;
+using Microsoft.AspNetCore.Cors;
+using System.Text.RegularExpressions;
 
 namespace API_WEB.Controllers
 {
@@ -23,7 +25,7 @@ namespace API_WEB.Controllers
 
         // GET: api/Usuarios
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetTodoItems()
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
         {
             return await _context.Usuarios.ToListAsync();
         }
@@ -46,27 +48,24 @@ namespace API_WEB.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
-            if (id != usuario.Id)
+            if (!EmailIsValid(usuario.Email) || usuario.DataNascimento > DateTime.Now)
             {
-                return BadRequest();
+                return UnprocessableEntity();
             }
 
-            _context.Entry(usuario).State = EntityState.Modified;
+            if (!UsuarioExists(id) || id != usuario.Id)
+            {
+                return NotFound();
+            }
 
             try
             {
+                _context.Entry(usuario).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
-                if (!UsuarioExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest(ex);
             }
 
             return NoContent();
@@ -76,8 +75,20 @@ namespace API_WEB.Controllers
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
-            _context.Usuarios.Add(usuario);
-            await _context.SaveChangesAsync();
+            if (!EmailIsValid(usuario.Email) || usuario.DataNascimento > DateTime.Now)
+            {
+                return UnprocessableEntity();
+            }
+
+            try
+            {
+                _context.Usuarios.Add(usuario);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex);
+            }
 
             return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, usuario);
         }
@@ -101,6 +112,11 @@ namespace API_WEB.Controllers
         private bool UsuarioExists(int id)
         {
             return _context.Usuarios.Any(e => e.Id == id);
+        }
+
+        private bool EmailIsValid(string  email)
+        {
+            return new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$").IsMatch(email);
         }
     }
 }

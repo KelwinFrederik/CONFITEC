@@ -257,3 +257,4 @@ D:\_Projetos\_ProjetosVS\CONFITEC\CONFITEC\WEBAPI\API\API_WEB\bin\Debug\net6.0\r
 D:\_Projetos\_ProjetosVS\CONFITEC\CONFITEC\WEBAPI\API\API_WEB\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\_Projetos\_ProjetosVS\CONFITEC\CONFITEC\WEBAPI\API\API_WEB\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\_Projetos\_ProjetosVS\CONFITEC\CONFITEC\WEBAPI\API\API_WEB\obj\Debug\net6.0\API_WEB.csproj.CopyComplete
+D:\_Projetos\_ProjetosVS\CONFITEC\CONFITEC\WEBAPI\API\API_WEB\bin\Debug\net6.0\web.config

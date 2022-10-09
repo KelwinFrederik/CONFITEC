@@ -3,19 +3,24 @@ using API_WEB.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddCors(options => { options.AddPolicy("EnableCORS", builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().Build();
+    });
+});
 
+builder.Services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer("Server=localhost;Database=Cadastro;Trusted_Connection=True;"));
 builder.Services.AddControllers();
-builder.Services.AddDbContext<DatabaseContext>(opt =>
-    opt.UseSqlServer("Server=localhost;Database=Cadastro;Trusted_Connection=True;"));
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (builder.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
+
+app.UseCors("EnableCORS");
 
 app.UseHttpsRedirection();
 

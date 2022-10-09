@@ -1,7 +1,7 @@
 ﻿namespace API_WEB.Modelo
 {
     public class Usuario
-    {
+    {        
         public int Id { get; set; } = 0;
         public string Nome { get; set; } = string.Empty;
         public string Sobrenome { get; set; } = string.Empty;

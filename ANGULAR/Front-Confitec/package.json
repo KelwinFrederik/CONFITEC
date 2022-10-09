@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@angular/cli": "^14.2.5",
+    "@angular/core": "^14.2.5",
+    "@angular/forms": "^14.2.5",
+    "@angular/platform-browser-dynamic": "^14.2.5"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^14.2.5",
+    "tslib": "^2.4.0"
+  }
+}
